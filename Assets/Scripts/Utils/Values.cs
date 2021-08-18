@@ -9,12 +9,21 @@ namespace Utils
         public class GameValues
         {
             public static bool isDebug;
+            public static bool gameStart;
+
             public static bool playerManagerInit;
             public static bool playerShipInit;
+            public static bool asteroidsSpawnerReady;
+            public static bool playerSpawned;
 
             public static bool asteroidInit;
             public static bool enemyInit;
         }
 
+        public class UiValues
+        {
+            public static bool topInit;
+            public static bool buttonsInit;
+        }
     }
 }

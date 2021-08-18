@@ -26,21 +26,28 @@ namespace Player
         [SerializeField]
         private Laser laser;
 
-        [SerializeField]
-        private PoolingSystem pooling;
-
         private Vector2 position = new Vector2(0f, 0f);
         private Vector3 mousePosition;
                 
         private CoreManager core;
         private PlayerManager playerManager;
+        private GameManager gameManager;
+
         private UnityAction onPlayerShoot;
 
         public void InitPlayers(CoreManager core, UnityAction PlayerShootCallback)
         {
             this.core = core;
+            this.gameManager = core.GameManager;
             this.playerManager = core.Player;
+
+            //gameManager.playerShip = this;
+
             this.onPlayerShoot = PlayerShootCallback;
+
+            Values.GameValues.playerSpawned = true;
+
+            Debug.Log("Pinit");
         }
 
         public void UpdatePlayerShip()
@@ -69,6 +76,7 @@ namespace Player
             //
             float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + rotationOffset));
+
         }
 
         private void FixedUpdate()
@@ -78,9 +86,9 @@ namespace Player
 
         private void PlayerShooting()
         {
-            GameObject temp = pooling.UseObject(laser.gameObject, shootPoint.position, shootPoint.rotation);
+            GameObject temp = Instantiate(laser.gameObject, shootPoint.position, shootPoint.rotation);
             temp.transform.localPosition = shootPoint.transform.position;
-            temp.transform.parent = core.GameManager.spawnsHolder.transform;
+            temp.transform.parent = gameManager.spawnsHolder.transform;
             temp.gameObject.GetComponent<Laser>().InitLaser();
             temp.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.shootSpeed);
         }

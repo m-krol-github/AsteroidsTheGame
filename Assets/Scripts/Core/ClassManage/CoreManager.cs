@@ -6,14 +6,15 @@ using Asteroids;
 using Utils;
 using Events;
 using Sounds;
+using Core.UI;
 
 namespace Core
 {
     public class CoreManager : MonoBehaviour
     {
         [SerializeField]
-        private GameEvents events;
-        public GameEvents Events => events;
+        private EventsManager events;
+        public EventsManager Events => events;
 
         [SerializeField]
         private GameManager gameManager;
@@ -38,5 +39,9 @@ namespace Core
         [SerializeField]
         private AsteroidsSpawners asteroidsSpawners;
         public AsteroidsSpawners AsteroidsSpawners => asteroidsSpawners;
+
+        [SerializeField]
+        private UiRoot uiRoot;
+        public UiRoot UiRoot => uiRoot;
     }
 }

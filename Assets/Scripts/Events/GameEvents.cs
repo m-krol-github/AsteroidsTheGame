@@ -13,10 +13,24 @@ namespace Events
             onPlayerShooting.Invoke();
         }
 
-        public UnityAction onAsteroidHit;
-        public void AsteroidHitCallback()
+        public UnityAction onAsteroidHitBasic;
+        public UnityAction<int> onAsteroidHit;
+        public void AsteroidHitCallback(int i)
         {
-            onAsteroidHit.Invoke();
+            onAsteroidHitBasic.Invoke();
+            onAsteroidHit.Invoke(i);
+        }
+
+        public UnityAction onPlayerMove;
+        public void EngineSoundCallback()
+        {
+            onPlayerMove.Invoke();
+        }
+
+        public UnityAction onPlayerHit;
+        public void PlayerHitCallback()
+        {
+            onPlayerHit.Invoke();
         }
     }
 }

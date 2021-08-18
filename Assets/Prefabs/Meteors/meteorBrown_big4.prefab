@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 4234904887211339807}
   - component: {fileID: 4909914612607424971}
   - component: {fileID: -2683858441490195917}
+  - component: {fileID: -5846157265153385330}
   m_Layer: 0
   m_Name: meteorBrown_big4
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -140,3 +141,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 179132e39eef2df409cd61dd3893fe3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionSpeed: 50
+  asteroidSpeeed: 0
+  direction: {x: 0, y: 0, z: 0}
+  chunks:
+  - {fileID: -6004897170084205801, guid: 69139f662f02523468b16b640aaad3cb, type: 3}
+  - {fileID: 2405750428228325952, guid: c778ec2de9b9ff04d9eb542c223134e2, type: 3}
+--- !u!50 &-5846157265153385330
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8841078630617712777}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

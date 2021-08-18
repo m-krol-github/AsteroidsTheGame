@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Core;
 using Events;
-
+using Utils;
 
 namespace Sounds
 {
@@ -13,13 +13,23 @@ namespace Sounds
         private AudioSource audioS;
 
         [SerializeField]
+        private AudioSource engineSourece;
+
+        [SerializeField]
+        private AudioClip engineSound;
+
+        [SerializeField]
         private AudioClip[] shootSounds;
 
         [SerializeField]
         private AudioClip[] asteroidHit;
 
+        [SerializeField]
+        private AudioClip[] playerHit;
+
+
         private CoreManager core;
-        private GameEvents events;
+        private EventsManager events;
 
         public void InitSounds(CoreManager core)
         {
@@ -27,12 +37,16 @@ namespace Sounds
             this.events = core.Events;
 
             AssignEvents();
+
+            PlayEngineSound();
         }
 
         private void AssignEvents()
         {
-            events.onPlayerShooting += PlayShootSound;
-            events.onAsteroidHit += PlayAsterHitSound;
+            events.MainEvents.onPlayerShooting += PlayShootSound;
+            events.MainEvents.onAsteroidHitBasic += PlayAsterHitSound;
+            events.MainEvents.onPlayerMove += StopEngineSound;
+            events.MainEvents.onPlayerHit += PlayerHitSound;
         }
 
         public void PlayShootSound()
@@ -47,27 +61,28 @@ namespace Sounds
             audioS.PlayOneShot(asteroidHit[sound]);
         }
 
+        public void PlayerHitSound()
+        {
+            var sound = Random.Range(0, playerHit.Length);
+            audioS.PlayOneShot(playerHit[sound]);
+        }
 
+        public void PlayEngineSound()
+        {
+            engineSourece.Play();
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public void StopEngineSound()
+        {
+            engineSourece.Stop();
+        }
 
         private void UnAssignEvents()
         {
-            events.onPlayerShooting -= PlayShootSound;
-            events.onAsteroidHit -= PlayAsterHitSound;
+            events.MainEvents.onPlayerShooting -= PlayShootSound;
+            events.MainEvents.onAsteroidHitBasic -= PlayAsterHitSound;
+            events.MainEvents.onPlayerMove -= PlayEngineSound;
+            events.MainEvents.onPlayerHit -= PlayerHitSound;
         }
 
         private void OnDestroy()
