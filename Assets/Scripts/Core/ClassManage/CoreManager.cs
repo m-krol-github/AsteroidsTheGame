@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Player;
 using Asteroids;
 using Utils;
 using Events;
 using Sounds;
 using Core.UI;
+using Enemies;
 
 namespace Core
 {
@@ -25,10 +24,6 @@ namespace Core
         public PlayerManager Player => player;
 
         [SerializeField]
-        private AsteroidsManager asteroids;
-        public AsteroidsManager Asteroids => asteroids;
-
-        [SerializeField]
         private Enums enums;
         public Enums Enums => enums;
 
@@ -43,5 +38,9 @@ namespace Core
         [SerializeField]
         private UiRoot uiRoot;
         public UiRoot UiRoot => uiRoot;
+
+        [SerializeField]
+        private EnemySpawner enemySpawner;
+        public EnemySpawner EnemySpawner => enemySpawner;
     }
 }

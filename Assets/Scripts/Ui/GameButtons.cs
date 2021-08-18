@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Events;
-using Core;
 using Utils;
-using UnityEngine.Events;
+using TMPro;
 
 namespace Core.UI
 {
@@ -14,23 +12,30 @@ namespace Core.UI
         [SerializeField]
         private Button playButton;
 
-        private CoreManager core;
+        [SerializeField]
+        private TextMeshProUGUI startGameText;
 
-        private UnityAction onPlayClick;
+        private CoreManager core;
 
         public void InitView(CoreManager core)
         {
             this.core = core;
             this.playButton.onClick.AddListener(PlayClickCallback);
-
+            //
             Values.UiValues.buttonsInit = true;
         }
 
         public void UpdateView()
         {
-
+            if (Values.GameValues.playerSpawned)
+            {
+                playButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                playButton.gameObject.SetActive(true);
+            }
         }
-
 
         public override void ShowView()
         {

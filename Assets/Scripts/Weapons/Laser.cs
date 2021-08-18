@@ -18,7 +18,7 @@ namespace Player
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.gameObject.tag != "Player")
+            if (other.gameObject.tag != "Player" && other.gameObject.tag != "PowerUP")
                 other.gameObject.GetComponent<IDestroyable>().DestroyMe();
         }
     }

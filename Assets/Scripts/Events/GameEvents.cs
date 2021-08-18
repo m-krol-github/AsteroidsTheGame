@@ -32,5 +32,36 @@ namespace Events
         {
             onPlayerHit.Invoke();
         }
+
+        public UnityAction onHealthPick;
+        public void HealthPickUP()
+        {
+            onHealthPick.Invoke();
+        }
+
+        public UnityAction onShootPick;
+        public void ShootPickUp()
+        {
+            onShootPick.Invoke();
+        }
+
+        public UnityAction onEnemySpawn;
+        public void EnemySpawnCallback()
+        {
+            onEnemySpawn.Invoke();
+        }
+
+        public UnityAction onEnemyHitBasic;
+        public UnityAction<int> onEnemyHit;
+        public void EnemyHitCallBack(int i)
+        {
+            onEnemyHit.Invoke(i);
+        }
+
+        public void EnemyHitBasicCallback()
+        {
+            onEnemyHitBasic.Invoke();
+        }
+
     }
 }

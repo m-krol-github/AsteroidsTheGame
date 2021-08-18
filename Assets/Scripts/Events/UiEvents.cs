@@ -12,5 +12,11 @@ namespace Events
         {
             onPlayClick.Invoke();
         }
+
+        public UnityAction onPlayerSpawn;
+        public void PlayerSpawnCallback()
+        {
+            onPlayerSpawn.Invoke();
+        }
     }
 }

@@ -6,6 +6,8 @@ using Asteroids;
 using Sounds;
 using UnityEngine.SceneManagement;
 using Core.UI;
+using Enemies;
+using System.Collections;
 
 namespace Core
 {
@@ -21,12 +23,13 @@ namespace Core
 
         public GameObject spawnsHolder;
 
-        //public PlayerShip playerShip;
+        public bool isStart;
 
         private PlayerManager players;
         private Enums enums;
         private SoundsManage sounds;
         private AsteroidsSpawners asteroidsSpawners;
+        private EnemySpawner enemySpawner;
         private EventsManager events;
 
         private void Awake()
@@ -57,6 +60,7 @@ namespace Core
             this.events = core.Events;
             this.players = core.Player;
             this.sounds = core.Sounds;
+            this.enemySpawner = core.EnemySpawner;
             this.asteroidsSpawners = core.AsteroidsSpawners;
 
             sounds.InitSounds(core);
@@ -65,9 +69,10 @@ namespace Core
         private void Start()
         {
             Values.GameValues.gameStart = true;
-            
+
             asteroidsSpawners.InitSpaweners(core);
             players.PlayerManagerInit(core);
+            enemySpawner.InitSpaweners(Core);
             // init ui
             core.UiRoot.TopView.InitView(core);
             core.UiRoot.TopView.ShowView();
@@ -84,9 +89,6 @@ namespace Core
                 if (Values.GameValues.gameStart)
                     return;
 
-                if (Input.GetMouseButtonDown(2))
-                {                   
-                }
             }
 
             if(Values.GameValues.asteroidsSpawnerReady)
@@ -115,6 +117,12 @@ namespace Core
             /*
             if (Values.UiValues.buttonsInit)
                 core.UiRoot.Buttons.UpdateView();*/
+
+            if (Values.GameValues.enemysSpawnerReady)
+                core.EnemySpawner.UpdateSpawner();
+
+            if (Values.UiValues.buttonsInit)
+                core.UiRoot.Buttons.UpdateView();
         }
-    }
+    }    
 }

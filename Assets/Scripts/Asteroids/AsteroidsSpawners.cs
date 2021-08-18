@@ -12,7 +12,7 @@ namespace Asteroids
         public float asteroidSpeeed;
 
 
-        [SerializeField]
+        [Header("Asteroids"), SerializeField]
         private Asteroid[] asteroid;
 
         [SerializeField]
@@ -23,6 +23,11 @@ namespace Asteroids
 
         [SerializeField]
         private Vector2 dir;
+
+        [Header("PowerUPs"), SerializeField]
+        private PowerUp health;
+        [SerializeField]
+        private PowerUp shooting;
 
         private CoreManager core;
 
@@ -59,6 +64,8 @@ namespace Asteroids
             var asteroidType = Random.Range(0, asteroid.Length);
             var aster = Instantiate(asteroid[asteroidType], pickPlace, Quaternion.identity);
             aster.InitAsteroid(core);
+            aster.healthUP = health;
+            aster.shootUP = shooting;
 
             #region MOVE_DIRECTION
 

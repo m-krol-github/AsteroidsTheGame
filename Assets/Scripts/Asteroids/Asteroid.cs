@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Core;
+using Utils;
 
 namespace Asteroids
 {
@@ -11,7 +12,11 @@ namespace Asteroids
         public float asteroidSpeeed;
         public Vector3 direction;
 
-        [SerializeField]
+        [Header("PowerUPs")]
+        public PowerUp healthUP;
+        public PowerUp shootUP;
+
+        [Header("Chunks"), SerializeField]
         private Chunk[] chunks;
 
         private CoreManager core;
@@ -44,7 +49,15 @@ namespace Asteroids
         {
             if (other.gameObject.tag == "Bullet")
             {
+                var propability = Random.Range(0, 100);
 
+                if (propability < 10)
+                    Instantiate(healthUP, this.gameObject.transform.position, transform.rotation);
+
+                if (propability > 95)
+                    Instantiate(shootUP, this.gameObject.transform.position, transform.rotation);
+
+                //
                 var afterCollisionL = Instantiate(chunks[0], this.gameObject.transform.position, transform.rotation);
                 var afterCollisionR = Instantiate(chunks[1], this.gameObject.transform.position, transform.rotation);
                 afterCollisionL.OnInitChunk(core);

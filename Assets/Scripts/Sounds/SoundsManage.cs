@@ -27,6 +27,20 @@ namespace Sounds
         [SerializeField]
         private AudioClip[] playerHit;
 
+        [SerializeField]
+        private AudioClip[] health;
+
+        [SerializeField]
+        private AudioClip[] shootUp;
+
+        [SerializeField]
+        private AudioClip[] enemySpawn;
+
+        [SerializeField]
+        private AudioClip[] enemyHit;
+
+
+
 
         private CoreManager core;
         private EventsManager events;
@@ -47,6 +61,10 @@ namespace Sounds
             events.MainEvents.onAsteroidHitBasic += PlayAsterHitSound;
             events.MainEvents.onPlayerMove += StopEngineSound;
             events.MainEvents.onPlayerHit += PlayerHitSound;
+            events.MainEvents.onHealthPick += PlayerHealthSound;
+            events.MainEvents.onShootPick += ShootPickup;
+            events.MainEvents.onEnemySpawn += EnemySpawn;
+            events.MainEvents.onEnemyHitBasic += EnemyHit;
         }
 
         public void PlayShootSound()
@@ -67,6 +85,31 @@ namespace Sounds
             audioS.PlayOneShot(playerHit[sound]);
         }
 
+        public void PlayerHealthSound()
+        {
+            var sound = Random.Range(0, health.Length);
+            audioS.PlayOneShot(health[sound]);
+        }
+
+        public void ShootPickup()
+        {
+            var sound = Random.Range(0, shootSounds.Length);
+            audioS.PlayOneShot(shootSounds[sound]);
+        }
+
+        public void EnemySpawn()
+        {
+            var sound = Random.Range(0, enemySpawn.Length);
+            audioS.PlayOneShot(enemySpawn[sound]);
+        }
+
+        public void EnemyHit()
+        {
+            var sound = Random.Range(0, enemyHit.Length);
+            audioS.PlayOneShot(enemyHit[sound]);
+        }
+
+
         public void PlayEngineSound()
         {
             engineSourece.Play();
@@ -83,6 +126,10 @@ namespace Sounds
             events.MainEvents.onAsteroidHitBasic -= PlayAsterHitSound;
             events.MainEvents.onPlayerMove -= PlayEngineSound;
             events.MainEvents.onPlayerHit -= PlayerHitSound;
+            events.MainEvents.onHealthPick -= PlayerHealthSound;
+            events.MainEvents.onShootPick -= ShootPickup;
+            events.MainEvents.onEnemySpawn -= EnemySpawn;
+            events.MainEvents.onEnemyHitBasic -= EnemyHit;
         }
 
         private void OnDestroy()

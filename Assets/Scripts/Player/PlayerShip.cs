@@ -22,9 +22,15 @@ namespace Player
         [Header("Shooting"), SerializeField]
         private Transform shootPoint;
         public float shootSpeed;
+        public bool shootConst;
+        public float timeOfShootConst = 10;
 
         [SerializeField]
         private Laser laser;
+
+        [Header("PowerUps"), SerializeField]
+        private GameObject shield;
+        
 
         private Vector2 position = new Vector2(0f, 0f);
         private Vector3 mousePosition;
@@ -45,19 +51,36 @@ namespace Player
 
             this.onPlayerShoot = PlayerShootCallback;
 
-            Values.GameValues.playerSpawned = true;
+            shootConst = false;
 
-            Debug.Log("Pinit");
+            Values.GameValues.playerSpawned = true;
         }
+
+        public void AssignEvents()
+        {
+
+        }
+
 
         public void UpdatePlayerShip()
         {
             RigidFollow();
 
-            if (Input.GetMouseButtonDown(0))
+            if (!shootConst)
             {
-                PlayerShooting();
-                onPlayerShoot.Invoke();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    PlayerShooting();
+                    onPlayerShoot.Invoke();
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    PlayerShooting();
+                    onPlayerShoot.Invoke();
+                }
             }
         }
 
@@ -93,9 +116,42 @@ namespace Player
             temp.GetComponent<Rigidbody2D>().AddForce(this.transform.up * this.shootSpeed);
         }
 
+        public void GotHeathPowerUp()
+        {
+            playerManager.playerHP++;    
+        }
+        public void GotShootPowerUp()
+        {
+            StartCoroutine(ShootConstant(timeOfShootConst));
+        }
+
+        private IEnumerator ShootConstant(float t)
+        {
+            shootConst = true;
+            yield return new WaitForSeconds(t);
+            shootConst = false;
+        }
+
         private void OnCollisionEnter2D(Collision2D other)
         {
-            other.gameObject.GetComponent<IDestroyable>().DestroyMe();
+            if (other.gameObject.tag != "PowerUP")
+                other.gameObject.GetComponent<IDestroyable>().DestroyMe();
+
+            if(other.gameObject.tag == "PowerUP")
+            {
+                var type = other.gameObject.GetComponent<PowerUp>().powerUpType;
+                if(type == 1)
+                {
+                    core.Events.MainEvents.HealthPickUP();
+                    GotHeathPowerUp();
+                }
+                if(type == 2)
+                {
+                    core.Events.MainEvents.ShootPickUp();
+                    GotShootPowerUp();
+                }
+                Destroy(other.gameObject);
+            }
         }
     }
 }

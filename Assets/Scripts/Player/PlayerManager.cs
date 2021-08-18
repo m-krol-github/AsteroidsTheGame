@@ -19,12 +19,6 @@ namespace Player
 
         [SerializeField]
         private Animator playerAnimations;
-        [SerializeField]
-        private Animation playerDestorAnimation;
-        [SerializeField]
-        private Animation playerSpawnAnimation;
-        [SerializeField]
-        private Animation playerShieldAnimation;
 
         [SerializeField]
         private PlayerShip playerPrefab;
@@ -51,6 +45,7 @@ namespace Player
             events.MainEvents.onAsteroidHit += AddScore;
             events.MainEvents.onPlayerHit += PlayerGotHit;
             events.UiEvents.onPlayClick += SpawnPlayer;
+            events.MainEvents.onEnemyHit += AddScore;
         }
 
         public void SpawnPlayer()
@@ -72,7 +67,7 @@ namespace Player
             }
 
             PlayerPrefs.SetInt("Score", playerScore);
-            if(PlayerPrefs.GetInt("Score") <= playerScore)
+            if(PlayerPrefs.GetInt("TopScore") <= playerScore)
             {
                 PlayerPrefs.SetInt("TopScore", playerScore);
             }
@@ -110,6 +105,7 @@ namespace Player
             events.MainEvents.onAsteroidHit -= AddScore;
             events.MainEvents.onPlayerHit -= PlayerGotHit;
             events.UiEvents.onPlayClick -= SpawnPlayer;
+            events.MainEvents.onEnemyHit -= AddScore;
         }
 
         private void OnDestroy()
@@ -120,11 +116,10 @@ namespace Player
 
         private IEnumerator DestoryShip()
         {
-            Values.GameValues.playerSpawned = false;
             playerAnimations.SetBool("Destroy", true);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
             Destroy(playerShip.gameObject);
+            Values.GameValues.playerSpawned = false;
         }
-
     }
 }

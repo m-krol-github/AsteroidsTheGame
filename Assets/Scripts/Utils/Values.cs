@@ -18,6 +18,8 @@ namespace Utils
 
             public static bool asteroidInit;
             public static bool enemyInit;
+
+            public static bool enemysSpawnerReady;
         }
 
         public class UiValues
