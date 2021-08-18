@@ -88,6 +88,15 @@ namespace Enemies
         {
             if (other.gameObject.tag != "Player" && other.gameObject.tag != "Asteroid")
             {
+                var propability = Random.Range(0, 100);
+
+                if (propability < 20)
+                    Instantiate(healthUP, this.gameObject.transform.position, transform.rotation);
+
+                if (propability > 75)
+                    Instantiate(shootUP, this.gameObject.transform.position, transform.rotation);
+
+                //
                 other.gameObject.GetComponent<IDestroyable>().DestroyMe();
                 core.Events.MainEvents.EnemyHitCallBack(250);
                 core.Events.MainEvents.EnemyHitBasicCallback();

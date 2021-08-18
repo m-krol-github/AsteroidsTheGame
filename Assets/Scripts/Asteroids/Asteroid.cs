@@ -51,10 +51,10 @@ namespace Asteroids
             {
                 var propability = Random.Range(0, 100);
 
-                if (propability < 10)
+                if (propability < 20)
                     Instantiate(healthUP, this.gameObject.transform.position, transform.rotation);
 
-                if (propability > 95)
+                if (propability > 75)
                     Instantiate(shootUP, this.gameObject.transform.position, transform.rotation);
 
                 //
