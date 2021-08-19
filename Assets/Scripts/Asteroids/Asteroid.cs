@@ -26,6 +26,8 @@ namespace Asteroids
             this.gameObject.transform.parent = core.GameManager.spawnsHolder.transform;
 
             this.core = core;
+
+            StartCoroutine(DestroyAfter(10f));
         }
 
         public void DestroyMe()
@@ -91,5 +93,10 @@ namespace Asteroids
             }*/
         }
 
+
+        private IEnumerator DestroyAfter(float t)
+        {
+            yield return new WaitForSeconds(t);
+        }
     }
 }
